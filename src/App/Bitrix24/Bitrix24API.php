@@ -174,8 +174,9 @@ class Bitrix24API
             $httpCode = $this->http->getHTTPCode();
             $jsonParams = $this->toJSON($params);
             $jsonResponse = $this->toJSON($this->lastResponse);
-            throw new Bitrix24APIException(
-                "Ошибка: HTTP код {$httpCode} при запросе '{$function}' ({$jsonParams}): {$jsonResponse}"
+            throw new Bitrix24APIHttpException(
+                "Ошибка: HTTP код {$httpCode} при запросе '{$function}' ({$jsonParams}): {$jsonResponse}",
+                $httpCode
             );
         }
 
@@ -183,7 +184,7 @@ class Bitrix24API
         if (! empty($this->lastResponse['error']) || ! empty($this->lastResponse['error_description'])) {
             $jsonParams = $this->toJSON($params);
             $jsonResponse = $this->toJSON($this->lastResponse);
-            throw new Bitrix24APIException("Ошибка при запросе '{$function}' ({$jsonParams}): {$jsonResponse}");
+            throw new Bitrix24APIHttpException("Ошибка при запросе '{$function}' ({$jsonParams}): {$jsonResponse}");
         }
 
         return $this->lastResponse['result'];
