@@ -22,6 +22,9 @@ use Exception;
 
 class Bitrix24APIHttpException extends Bitrix24APIException
 {
+    const NOT_FOUND = 404;
+    const HAS_NO_ACCESS = 401;
+
     protected $httpCode;
 
     /**
@@ -41,5 +44,10 @@ class Bitrix24APIHttpException extends Bitrix24APIException
     public function getHttpCode()
     {
         return $this->httpCode;
+    }
+
+    public function isRowExists(){
+        return $this->httpCode != self::HAS_NO_ACCESS
+            && $this->httpCode != self::NOT_FOUND;
     }
 }
