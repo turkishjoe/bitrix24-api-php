@@ -47,7 +47,6 @@ class Bitrix24APIHttpException extends Bitrix24APIException
     }
 
     public function isRowExists(){
-        return $this->httpCode != self::HAS_NO_ACCESS
-            && $this->httpCode != self::NOT_FOUND;
+        return $this->httpCode != self::NOT_FOUND;
     }
 }
